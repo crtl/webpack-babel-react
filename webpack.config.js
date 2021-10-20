@@ -1,6 +1,5 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const webpack = require('webpack')
 
 const isProd = process.env.WEBPACK_MODE === "production";
 
@@ -8,7 +7,7 @@ module.exports = {
     mode: "development",
     entry: "./src/index.jsx",
     output: {
-        path: path.resolve(__dirname, "build"),
+        path: path.resolve(__dirname, "build/app"),
     },
     resolve: {
         extensions: ['.js', '.jsx'],
