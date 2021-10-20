@@ -10,12 +10,12 @@ const AppStyle = styled.div`
     padding: 40px 20p;
 `;
 
-export function App(props) {
+export function App() {
 
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState<number>(0);
 
     return (<AppStyle id="App">
-        <h1>React works</h1>
+        <h1>React Typescript works</h1>
         <p>Counter: {count}</p>
         <button onClick={() => setCount(count + 1)}>Increment</button>
         <button onClick={() => setCount(count - 1)}>Decrement</button>

@@ -4,17 +4,30 @@ const webpack = require('webpack')
 
 const isProd = process.env.WEBPACK_MODE === "production";
 
+const BabelLoader = {
+    loader: "babel-loader",
+    options: {
+        presets: [
+            ['@babel/preset-env', {
+                "targets": "defaults"
+            }],
+            "@babel/preset-react",
+        ]
+    }
+};
+
 module.exports = {
     mode: "development",
-    entry: "./src/index.jsx",
+    entry: "./src/index.tsx",
     output: {
         path: path.resolve(__dirname, "build"),
     },
     resolve: {
-        extensions: ['.js', '.jsx'],
+        extensions: ['.js', '.jsx', ".ts", ".tsx"],
     },
     module: {
         rules: [
+            // SASS config
             {
                 test: /\.s[ac]ss$/i,
                 use: [
@@ -26,22 +39,23 @@ module.exports = {
                     "sass-loader",
                 ],
             },
+            // TSX config
+            {
+                test: /\.tsx?$/,
+                exclude: /node_modules/,
+                use: [
+                    BabelLoader,
+                    {loader: "ts-loader"}
+                ]
+            },
+            // JSX config
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
-                include: path.resolve(__dirname, "src"),
-                use: {
-                    loader: "babel-loader",
-                    options: {
-                        presets: [
-                            ['@babel/preset-env', {
-                                "targets": "defaults"
-                            }],
-                            "@babel/preset-react",
-                        ]
-                    }
-                }
-            }
+                use: [
+                    BabelLoader,
+                ]
+            },
         ]
     },
     plugins: [
