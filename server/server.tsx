@@ -2,7 +2,7 @@ import express from "express";
 import * as path from "path";
 import * as fs from "fs";
 import React from "react";
-import {App} from "../src/App";
+import App from "../src/App";
 
 import ReactDOMServer from "react-dom/server";
 
@@ -10,11 +10,13 @@ const PORT = process.env.PORT || 9000;
 
 const app = express();
 
-console.log(__dirname);
+const appDir = path.resolve(__dirname, "../app");
+
+console.log("appDir", appDir);
 
 
 app.get("/", (req, res) => {
-    const indexPath = path.resolve(__dirname, "../app/index.html");
+    const indexPath = path.resolve(appDir, "index.html");
 
     fs.readFile(indexPath, "utf8", (err, data) => {
         if (err) {
@@ -24,6 +26,8 @@ app.get("/", (req, res) => {
 
         const app = ReactDOMServer.renderToString(<App />);
 
+        console.log("rendered");
+
         res.send(
             data.replace(`<div id="root"></div>`, `<div id="root">${app}</div>`)
         );
@@ -31,7 +35,7 @@ app.get("/", (req, res) => {
 
 });
 
-app.use(express.static(path.resolve(__dirname, "../app")));
+app.use(express.static(appDir));
 
 app.listen(PORT, () => {
     console.log("Listening on localhost:" + PORT);
