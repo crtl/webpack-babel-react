@@ -11,7 +11,7 @@ const BabelLoader = {
                 "targets": "defaults"
             }],
             "@babel/preset-react",
-        ]
+        ],
     }
 };
 
